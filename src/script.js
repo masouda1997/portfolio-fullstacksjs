@@ -35,3 +35,10 @@ window.addEventListener('devicemotion', (event) => {
 
   setParallax({ x: accX, y: accY, blur });
 });
+
+const btn = document.querySelector('.toggle-btn');
+
+btn.addEventListener('click', () => {
+  btn.classList.toggle('active');
+  document.documentElement.classList.toggle('dark')
+});

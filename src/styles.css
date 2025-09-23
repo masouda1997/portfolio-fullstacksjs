@@ -1,4 +1,11 @@
 @layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+
   :root {
     --color-bg: #c6c6c6;
     --color-fg: #000000;
@@ -10,6 +17,13 @@
     --color-shadow-2: hsl(130deg 100% 70%);
   }
 
+  html.dark {
+    --color-bg: #1f1f1f;
+    --color-fg: #c6c6c6;
+
+  }
+
+
   html {
     background-color: var(--color-bg);
     color: var(--color-fg);
@@ -17,7 +31,10 @@
 
     font-family: var(--font-serif);
     font-optical-sizing: auto;
+    transition: background-color 0.3s, color 0.3s;
   }
+
+
 
   body,
   h1,
@@ -38,6 +55,39 @@
     --pointer-y: 0px;
   }
 
+  .header {
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px;
+
+    .toggle-btn {
+      width: 70px;
+      height: 30px;
+      background-color: var(--color-fg);
+      border-radius: 30px;
+      padding: 5px;
+      transition: all .3s ease-in-out;
+
+      &.active {
+        background-color: var(--color-shadow);
+      }
+
+      .inner-circle {
+        width: 20px;
+        height: 20px;
+        background-color: var(--color-bg);
+        border-radius: 50%;
+        transition: all 300ms ease-in-out;
+      }
+
+      &.active>.inner-circle {
+        margin-left: 40px;
+      }
+    }
+  }
+
   .container {
     height: 100dvh;
     width: 100dvw;
@@ -47,6 +97,9 @@
     grid-template-rows: 1fr;
     place-items: center;
     justify-content: center;
+    position: absolute;
+    top: 0;
+    z-index: -1;
   }
 
   .deer {
@@ -58,16 +111,29 @@
 
     translate: calc(var(--pointer-x) - 80px) calc(var(--pointer-y) - 100px);
     filter: blur(var(--blur-deer));
-    width: 90vmin;
+    width: 70vmin;
     max-width: 600px;
 
     img {
-      animation: deer-glow 3s infinite alternate ease-in-out;
-    }
+        content: url('/images/deer.png');
+      }
 
     @media (min-width: 510px) {
       width: 65vmin;
       translate: calc(var(--pointer-x) - 100px) calc(var(--pointer-y) - 100px);
+    }
+  }
+
+/* Dark mode: override with dark version */
+
+  html.dark .deer {
+  
+    grid-column: 1;
+    grid-row: 1;
+
+    img {
+      content: url('/images/dark-deer.png');
+      animation: deer-glow 3s infinite alternate ease-in-out;
     }
   }
 
@@ -77,14 +143,12 @@
     grid-row: 1;
     filter: blur(var(--blur-man));
     will-change: filter;
-    translate: calc(80px + var(--pointer-x) * -1)
-      calc(100px + var(--pointer-y) * -1);
+    translate: calc(80px + var(--pointer-x) * -1) calc(100px + var(--pointer-y) * -1);
     width: 300px;
 
     @media (min-width: 510px) {
       width: 400px;
-      translate: calc(150px + var(--pointer-x) * -1)
-        calc(200px + var(--pointer-y) * -1);
+      translate: calc(150px + var(--pointer-x) * -1) calc(200px + var(--pointer-y) * -1);
     }
   }
 
@@ -98,6 +162,13 @@
     background-color: white;
     left: 14%;
     top: 10.5%;
+    animation: move 3s infinite alternate ease-in-out;
+    @media (min-width: 510px) {
+      width: 45px;
+    }
+  }
+
+  html.dark .man::after {
     box-shadow:
       inset 0 0 10px #fff,
       inset 10px 0 30px var(--color-shadow),
@@ -105,11 +176,9 @@
       0 0 5px #fff,
       -10px 0 60px var(--color-shadow),
       10px 0 60px var(--color-shadow-2),
-      100px 100px 200px 70px
-        color-mix(in hsl, var(--color-shadow-2) 40%, transparent);
-
+      100px 100px 200px 70px color-mix(in hsl, var(--color-shadow-2) 100%, transparent);
+    transition: box-shadow 0.4s ease, animation 0.4s ease;
     animation: move 3s infinite alternate ease-in-out;
-
     @media (min-width: 510px) {
       width: 45px;
     }
@@ -143,12 +212,12 @@
     grid-column: 1;
     grid-row: 1;
     z-index: 1;
-    opacity: 0.8;
+    opacity: .7;
     translate: calc(var(--pointer-x) / 2) calc(var(--pointer-y) / 2);
   }
 
   .heading {
-    font-size: clamp(2.5rem, 15vw, 11rem);
+    font-size: clamp(2rem, 12vw, 9rem);
     font-weight: normal;
   }
 
