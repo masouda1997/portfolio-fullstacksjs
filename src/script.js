@@ -5,6 +5,7 @@ import './styles.css';
 let accX = 0;
 let accY = 0;
 let hasMotionDetected = false;
+const btn = document.querySelector('.toggle-btn');
 
 function setParallax({ x, y, blur }) {
   document.body.style.setProperty('--pointer-x', `${x / 2}px`);
@@ -36,9 +37,7 @@ window.addEventListener('devicemotion', (event) => {
   setParallax({ x: accX, y: accY, blur });
 });
 
-const btn = document.querySelector('.toggle-btn');
-
 btn.addEventListener('click', () => {
   btn.classList.toggle('active');
-  document.documentElement.classList.toggle('dark')
+  document.documentElement.classList.toggle('dark');
 });
