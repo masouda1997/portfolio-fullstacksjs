@@ -6,6 +6,9 @@ let accX = 0;
 let accY = 0;
 let hasMotionDetected = false;
 const btn = document.querySelector('.toggle-btn');
+const heading = document.querySelector('.heading');
+const description = document.querySelector('.description');
+const aboutBox = document.getElementById('aboutBox');
 
 function setParallax({ x, y, blur }) {
   document.body.style.setProperty('--pointer-x', `${x / 2}px`);
@@ -41,3 +44,25 @@ btn.addEventListener('click', () => {
   btn.classList.toggle('active');
   document.documentElement.classList.toggle('dark');
 });
+
+
+const otherLinks = Array.from(description.children).filter(
+  (el) => !el.classList.contains('heading')
+);
+
+heading.addEventListener('click', (e) => {
+  e.preventDefault(); 
+  const isAboutVisible = aboutBox.classList.contains('show');
+
+  if (isAboutVisible) {
+    aboutBox.classList.remove('show');
+    aboutBox.style.display = 'none'
+
+    otherLinks.forEach((link) => (link.style.display = ''));
+  } else {
+    otherLinks.forEach((link) => (link.style.display = 'none'));
+    aboutBox.style.display = 'block';
+    aboutBox.classList.add('show')
+  }
+});
+
